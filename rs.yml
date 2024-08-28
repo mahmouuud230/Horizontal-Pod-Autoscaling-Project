@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myrs
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+        - name: c1
+          image: ubuntu
+          command: ["bash", "-c"]
+          args:
+            - |
+              apt update && apt install curl -y
+              while true; do
+                curl 10.102.120.71:6262
+              done
